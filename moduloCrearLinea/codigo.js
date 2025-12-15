@@ -6,7 +6,7 @@ function initialize() {
     directionsDisplay = new google.maps.DirectionsRenderer();
     var LaPaz= new google.maps.LatLng(-16.50524499495991, -68.1295895576477);
     var mapOptions = {
-        zoom: 17,
+        zoom: 32,
         center: LaPaz
     }
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
