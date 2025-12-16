@@ -3,15 +3,25 @@
 class ExampleTest extends TestCase {
 
 	/**
-	 * A basic functional test example.
+	 * Test home route returns successfully.
 	 *
 	 * @return void
 	 */
-	public function testBasicExample()
+	public function testHomeRoute()
 	{
-		$crawler = $this->client->request('GET', '/');
+		$this->call('GET', '/');
+		$this->assertResponseOk();
+	}
 
-		$this->assertTrue($this->client->getResponse()->isOk());
+	/**
+	 * Test home view contains expected content.
+	 *
+	 * @return void
+	 */
+	public function testHomeView()
+	{
+		$this->call('GET', '/');
+		$this->assertViewHas('hello');
 	}
 
 }

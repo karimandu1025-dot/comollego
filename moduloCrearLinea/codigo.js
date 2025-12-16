@@ -6,7 +6,7 @@ function initialize() {
     directionsDisplay = new google.maps.DirectionsRenderer();
     var LaPaz= new google.maps.LatLng(-16.50524499495991, -68.1295895576477);
     var mapOptions = {
-        zoom: 17,
+        zoom: 32,
         center: LaPaz
     }
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
@@ -16,11 +16,6 @@ function initialize() {
     directionsDisplay.setMap(map);
 }
 function adicionarMarca(posicion){
-    /*var marca = new google.maps.Marker({
-        position: posicion,
-        map: map,
-        draggable: true
-    });*/
     puntos.push(posicion);
     if (puntos.length >= 2)
         dibujarRuta();
@@ -31,65 +26,32 @@ function dibujarRuta() {
     var n = puntos.length;
     var start = puntos[0];
     var end = puntos[n - 1];
-    //console.log("start : " + start);
-    //console.log("end : " + end);
-
 
     var waypts = [];
-    /*
-    var checkboxArray = document.getElementById('waypoints');
-    for (var i = 0; i < checkboxArray.length; i++) {
-        if (checkboxArray.options[i].selected == true) {
-            waypts.push({
-                location:checkboxArray[i].value,
-                stopover:true});
-        }
-    }*/
-    for (var i = 0; i < n; i++)
+    for (var i = 0; i < n; i++) {
         waypts.push({
             location: puntos[i]
-            //, stopover: true
         });
+    }
 
     var request = {
         origin: start,
         destination: end,
         waypoints: waypts,
-          //optimizeWaypoints: true,
-        //travelMode: google.maps.TravelMode.WALKING
         travelMode: google.maps.TravelMode.DRIVING
     };
     directionsService.route(request, function(response, status) {
-        console.log("respuesta : " + status);
-        if (status == google.maps.DirectionsStatus.OK) {
-
+        if (status === google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
-            var superpuntos = response.routes[0].overview_path; //<= Aqui te da todos los puntos en un vector
+            var superpuntos = response.routes[0].overview_path;
             var nn = superpuntos.length;
             for (var i = 0; i < nn; i++) {
-                console.log("pnt : " + pnt);
                 var pnt = superpuntos[i];
                 var marca = new google.maps.Marker({
                     position: pnt,
                     map: map
                 });
             }
-            console.log("Cantidad de puntos :" + superpuntos.length);
-
-
-            //console.log(ruta.overview_path);
-           /* var route = response.routes[0];
-
-            var summaryPanel = document.getElementById('directions_panel');
-            summaryPanel.innerHTML = '';
-            // For each route, display summary information.
-            for (var i = 0; i < route.legs.length; i++) {
-                var routeSegment = i + 1;
-                summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment + '</b><br>';
-                summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-                summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-                summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-            }*/
         }
     });
 
@@ -99,7 +61,7 @@ function llenarTabla() {
     var contenido = "<select multiple size='30'>";
 
     for (var i = 0; i < puntos.length; i++) {
-        contenido += "<option>"+puntos[i].toString()+"</option>"
+        contenido += "<option>" + puntos[i].toString() + "</option>";
     }
     contenido += "</select>";
     listapuntos.innerHTML = contenido;
