@@ -45,11 +45,13 @@ function trasamos_rutas_de_markes()
 {
     if (vector_markes.length >= 2) {
         var pol = [];
+
         var rutaprocesada = false;
         var i = 0;
         while (true) {
             var ini = i;
             var fin = minimo(ini + 9, vector_markes.length - 1);
+
             var start = vector_markes[ini].getPosition();
             var end = vector_markes[fin].getPosition();
 
@@ -121,6 +123,7 @@ function placeMarker(pos, map, x) {
         draggable:true
     });
     google.maps.event.addListener(marker, 'click', function() {
+
         vector_markes.push(marker);
         trasamos_rutas_de_markes();
     });

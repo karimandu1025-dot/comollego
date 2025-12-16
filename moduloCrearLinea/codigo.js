@@ -6,7 +6,7 @@ function initialize() {
     directionsDisplay = new google.maps.DirectionsRenderer();
     var LaPaz = new google.maps.LatLng(-16.50524499495991, -68.1295895576477);
     var mapOptions = {
-        zoom: 17,
+        zoom: 32,
         center: LaPaz
     };
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
@@ -15,7 +15,7 @@ function initialize() {
     });
     directionsDisplay.setMap(map);
 }
-function adicionarMarca(posicion) {
+function adicionarMarca(posicion){
     puntos.push(posicion);
     if (puntos.length >= 2) {
         dibujarRuta();
@@ -42,7 +42,7 @@ function dibujarRuta() {
         travelMode: google.maps.TravelMode.DRIVING
     };
     directionsService.route(request, function(response, status) {
-        if (status == google.maps.DirectionsStatus.OK) {
+        if (status === google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
             var superpuntos = response.routes[0].overview_path;
             var nn = superpuntos.length;
