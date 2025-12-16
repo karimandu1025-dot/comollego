@@ -44,14 +44,12 @@ function trasamos_rutas_de_markes()
     if (vector_markes.length >= 2) {
         var pol = [];
 
-        //console.log("Tamaño : " + vector_markes.length);
         var rutaprocesada = false;
         var i = 0;
         while (true) {
             var ini = i;
             var fin = minimo(ini + 9, vector_markes.length - 1);
 
-            //console.log(ini + " - " + fin);
             var start = vector_markes[ini].getPosition();
             var end = vector_markes[fin].getPosition();
 
@@ -60,7 +58,6 @@ function trasamos_rutas_de_markes()
                 waypts.push({
                     location: vector_markes[k].getPosition()
                 });
-                //console.log(" - " + k + " - ");
             }
             var request;
             if (waypts.length > 0) {
@@ -68,7 +65,6 @@ function trasamos_rutas_de_markes()
                     origin: start,
                     destination: end,
                     waypoints: waypts,
-                    //optimizeWaypoints: true,//No poner por que modifica el orden de los waypoints
                     travelMode: google.maps.TravelMode.DRIVING
                 };
             } else {
@@ -104,7 +100,6 @@ function trasamos_rutas_de_markes()
                     path: pol
                 });
                 rutaactual.setMap(map);
-                // console.log("tamaño del POL que se dibujo : " + pol.length);
             } else {
                 setTimeout(dibujarPolyline, 200);
             }
