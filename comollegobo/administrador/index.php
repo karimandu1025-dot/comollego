@@ -13,30 +13,28 @@
             $registros = mysqli_query($con, "select * from parada") or die("Error en la consulta sql: ". mysqli_error($con));
             $cantidaddepuntos = 0;
 
-        while ($reg = mysqli_fetch_array($registros)) {
-            $id[$cantidaddepuntos] = $reg['idparada'];
-            $lat[$cantidaddepuntos] = $reg['latitud'];
-            $lng[$cantidaddepuntos] = $reg['longitud'];
-            $cantidaddepuntos++;
-        }
-        mysqli_close($con);
-        ?>
-        var puntos = [<?php
-        for ($i = 0; $i < $cantidaddepuntos; $i++) {
-            if ($i != 0) {
-                echo ",\n            ";
+            while ($reg = mysqli_fetch_array($registros)) {
+                $id[$cantidaddepuntos] = $reg['idparada'];
+                $lat[$cantidaddepuntos] = $reg['latitud'];
+                $lng[$cantidaddepuntos] = $reg['longitud'];
+                $cantidaddepuntos++;
             }
-            echo "new google.maps.LatLng(" . $lat[$i] . ", " . $lng[$i] . ")";
+            ?>
+        var puntos =  [<?php
+        for($i = 0; $i < $cantidaddepuntos; $i++) {
+            if ($i != 0)
+                echo ",\n";
+            echo "new google.maps.LatLng($lat[$i], $lng[$i])";
         }
         ?>];
         var id = [<?php
-        for ($i = 0; $i < $cantidaddepuntos; $i++) {
-            if ($i != 0) {
-                echo ", ";
-            }
-            echo "\"" . htmlspecialchars($id[$i], ENT_QUOTES, 'UTF-8') . "\"";
+        for($i = 0; $i < $cantidaddepuntos; $i++) {
+            if ($i != 0)
+            echo ", ";
+            echo "\"$id[$i]\"";
         }
         ?>];
+        /*************Aqui obtenemos todas las paradas de la base de datos *********/
     </script>
     <script type="text/javascript" src="codigo.js"></script>
 </head>

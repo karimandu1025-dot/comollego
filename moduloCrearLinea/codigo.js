@@ -4,11 +4,11 @@ var map;
 var puntos = [];
 function initialize() {
     directionsDisplay = new google.maps.DirectionsRenderer();
-    var LaPaz = new google.maps.LatLng(-16.50524499495991, -68.1295895576477);
+    var LaPaz= new google.maps.LatLng(-16.50524499495991, -68.1295895576477);
     var mapOptions = {
         zoom: 32,
         center: LaPaz
-    };
+    }
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
     google.maps.event.addListener(map, 'click', function (event) {
         adicionarMarca(event.latLng);
@@ -17,9 +17,8 @@ function initialize() {
 }
 function adicionarMarca(posicion){
     puntos.push(posicion);
-    if (puntos.length >= 2) {
+    if (puntos.length >= 2)
         dibujarRuta();
-    }
 }
 
 function dibujarRuta() {

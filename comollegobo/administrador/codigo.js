@@ -1,10 +1,10 @@
 var directionsService = new google.maps.DirectionsService();
 var nro_id;
 
-var nueva_ruta = [];
-var nuevos_id = [];
+var nueva_ruta=[];
+var nuevos_id=[];
 
-var vector_markes = [];
+var vector_markes=[];
 function initialize() {
     var mapOptions = {
         zoom: 14,
@@ -12,7 +12,8 @@ function initialize() {
     };
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-    marcamos_paradas(puntos, id);
+    marcamos_paradas(puntos,id);
+
 
     nro_id = puntos.length + 1;
     google.maps.event.addListener(map, 'click', function(e) {
@@ -36,10 +37,7 @@ function initialize() {
 
     });
 }
-function minimo(a, b) {
-    if (a < b) return a;
-    return b;
-}
+function minimo(a, b){ if (a < b) return a; return b;}
 var rutaactual;
 function trasamos_rutas_de_markes()
 {
@@ -110,8 +108,8 @@ function trasamos_rutas_de_markes()
     }
 }
 
-function marcamos_paradas(a, b) {
-    for (var i = 0; i < a.length; i++) {
+function marcamos_paradas(a,b) {
+    for(var i=0;i<a.length;i++) {
         placeMarker(a[i], map, b[i]);
     }
 }
@@ -119,13 +117,14 @@ function placeMarker(pos, map, x) {
     var marker = new google.maps.Marker({
         position: pos,
         map: map,
-        title: x,
+        title:x,
         draggable:true
     });
     google.maps.event.addListener(marker, 'click', function() {
 
         vector_markes.push(marker);
         trasamos_rutas_de_markes();
+
     });
 }
 google.maps.event.addDomListener(window, 'load', initialize);
