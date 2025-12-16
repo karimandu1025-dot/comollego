@@ -1,10 +1,10 @@
 var directionsService = new google.maps.DirectionsService();
 var nro_id;
 
-var nueva_ruta=[];
-var nuevos_id=[];
+var nueva_ruta = [];
+var nuevos_id = [];
 
-var vector_markes=[];
+var vector_markes = [];
 function initialize() {
     var mapOptions = {
         zoom: 14,
@@ -12,8 +12,7 @@ function initialize() {
     };
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-    marcamos_paradas(puntos,id);
-
+    marcamos_paradas(puntos, id);
 
     nro_id = puntos.length + 1;
     google.maps.event.addListener(map, 'click', function(e) {
@@ -37,21 +36,20 @@ function initialize() {
 
     });
 }
-function minimo(a, b){ if (a < b) return a; return b;}
+function minimo(a, b) {
+    if (a < b) return a;
+    return b;
+}
 var rutaactual;
 function trasamos_rutas_de_markes()
 {
     if (vector_markes.length >= 2) {
         var pol = [];
-
-        //console.log("Tamaño : " + vector_markes.length);
         var rutaprocesada = false;
         var i = 0;
         while (true) {
             var ini = i;
             var fin = minimo(ini + 9, vector_markes.length - 1);
-
-            //console.log(ini + " - " + fin);
             var start = vector_markes[ini].getPosition();
             var end = vector_markes[fin].getPosition();
 
@@ -60,7 +58,6 @@ function trasamos_rutas_de_markes()
                 waypts.push({
                     location: vector_markes[k].getPosition()
                 });
-                //console.log(" - " + k + " - ");
             }
             var request;
             if (waypts.length > 0) {
@@ -68,7 +65,6 @@ function trasamos_rutas_de_markes()
                     origin: start,
                     destination: end,
                     waypoints: waypts,
-                    //optimizeWaypoints: true,//No poner por que modifica el orden de los waypoints
                     travelMode: google.maps.TravelMode.DRIVING
                 };
             } else {
@@ -85,7 +81,7 @@ function trasamos_rutas_de_markes()
                         pol.push(response.routes[0].overview_path[j]);
                     }
                     if (fin == (vector_markes.length - 1))
-                        rutaprocesada = true; // Aqui marcamos que ya termino de procesar todos los puntos
+                        rutaprocesada = true;
                 }
             });
 
@@ -95,7 +91,6 @@ function trasamos_rutas_de_markes()
             i = fin;
         }
 
-        //ahora dibujamos el polyline
         function dibujarPolyline() {
             if (rutaprocesada) {
                 if (rutaactual)
@@ -104,7 +99,6 @@ function trasamos_rutas_de_markes()
                     path: pol
                 });
                 rutaactual.setMap(map);
-                // console.log("tamaño del POL que se dibujo : " + pol.length);
             } else {
                 setTimeout(dibujarPolyline, 200);
             }
@@ -114,8 +108,8 @@ function trasamos_rutas_de_markes()
     }
 }
 
-function marcamos_paradas(a,b) {
-    for(var i=0;i<a.length;i++) {
+function marcamos_paradas(a, b) {
+    for (var i = 0; i < a.length; i++) {
         placeMarker(a[i], map, b[i]);
     }
 }
@@ -123,15 +117,12 @@ function placeMarker(pos, map, x) {
     var marker = new google.maps.Marker({
         position: pos,
         map: map,
-        title:x,
+        title: x,
         draggable:true
     });
     google.maps.event.addListener(marker, 'click', function() {
-        //Aqui debemos adicionar a la lista
-        //alert(x);
         vector_markes.push(marker);
         trasamos_rutas_de_markes();
-
     });
 }
 google.maps.event.addDomListener(window, 'load', initialize);
