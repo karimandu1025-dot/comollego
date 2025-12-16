@@ -81,7 +81,7 @@ function trasamos_rutas_de_markes()
                         pol.push(response.routes[0].overview_path[j]);
                     }
                     if (fin == (vector_markes.length - 1))
-                        rutaprocesada = true; // Aqui marcamos que ya termino de procesar todos los puntos
+                        rutaprocesada = true;
                 }
             });
 
@@ -91,7 +91,6 @@ function trasamos_rutas_de_markes()
             i = fin;
         }
 
-        //ahora dibujamos el polyline
         function dibujarPolyline() {
             if (rutaprocesada) {
                 if (rutaactual)
@@ -122,8 +121,7 @@ function placeMarker(pos, map, x) {
         draggable:true
     });
     google.maps.event.addListener(marker, 'click', function() {
-        //Aqui debemos adicionar a la lista
-        //alert(x);
+
         vector_markes.push(marker);
         trasamos_rutas_de_markes();
 
